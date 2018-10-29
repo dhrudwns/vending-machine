@@ -19,24 +19,17 @@ void wiget::set_money(int value)
     this->money_ += value;
     ui->lcdNumber->display(this->money_);
     onoff_button();
-
-
 }
 
 void wiget::onoff_button()
 {
-    if(this->money_ > 0)
-        ui->reset->setEnabled(true);
-    else
-        ui->reset->setEnabled(false);
-    if(this->money_ >= 100)
-        ui->pbCoffee->setEnabled(true);
+    if(this->money_ > 0) ui->reset->setEnabled(true);
+    else ui->reset->setEnabled(false);
+    if(this->money_ >= 100) ui->pbCoffee->setEnabled(true);
     else ui->pbCoffee->setEnabled(false);
-    if(this->money_ >= 150)
-        ui->pbTea->setEnabled(true);
+    if(this->money_ >= 150) ui->pbTea->setEnabled(true);
     else ui->pbTea->setEnabled(false);
-    if(this->money_ >= 200)
-        ui->pbCola->setEnabled(true);
+    if(this->money_ >= 200) ui->pbCola->setEnabled(true);
     else ui->pbCola->setEnabled(false);
 }
 
