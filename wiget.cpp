@@ -16,21 +16,18 @@ wiget::~wiget()
 
 void wiget::set_money(int value)
 {
-    this->money_ += value;
-    ui->lcdNumber->display(this->money_);
+    money_ += value;
+    ui->lcdNumber->display(money_);
     onoff_button();
 }
 
 void wiget::onoff_button()
 {
-    if(this->money_ > 0) ui->reset->setEnabled(true);
-    else ui->reset->setEnabled(false);
-    if(this->money_ >= 100) ui->pbCoffee->setEnabled(true);
-    else ui->pbCoffee->setEnabled(false);
-    if(this->money_ >= 150) ui->pbTea->setEnabled(true);
-    else ui->pbTea->setEnabled(false);
-    if(this->money_ >= 200) ui->pbCola->setEnabled(true);
-    else ui->pbCola->setEnabled(false);
+
+    ui->pbReset->setEnabled(money_ > 0);
+    ui->pbCoffee->setEnabled(money_ > 100);
+    ui->pbTea->setEnabled(money_ > 150);
+    ui->pbCola->setEnabled(money_ > 200);
 }
 
 void wiget::on_pb500_clicked()
@@ -68,22 +65,20 @@ void wiget::on_pbCola_clicked()
     set_money(-200);
 }
 
-
-void wiget::on_reset_clicked()
+void wiget::on_pbReset_clicked()
 {
-    int number_500, number_100, number_50, number_10;
-    number_500 = this->money_ / 500;
-    this->money_ -= number_500 * 500;
-    number_100 = this->money_ / 100;
-    this->money_ -= number_100 * 100;
-    number_50 = this->money_ / 50;
-    this->money_ -= number_50 * 50;
-    number_10 = this->money_ / 10;
-    this->money_ -= number_10 * 10;
-
+    int coins[]={500,100,50,10};
+    int count[4]={0};
+    for(int i=0; i<4; i++)
+    {
+        count[i] = money_ / coins[i];
+        money_ -= coins[i]*count[i];
+    }
     QString status =
             QString("500 : %1, 100 : %2, 50 : %3, 10 : %4")
-            .arg(number_500).arg(number_100).arg(number_50).arg(number_10);
+            .arg(count[0]).arg(count[1]).arg(count[2]).arg(count[3]);
+    QMessageBox::
     QMessageBox::information(this, "reset", status);
-    ui->lcdNumber->display(this->money_);
+    ui->lcdNumber->display(money_);
+    onoff_button();
 }

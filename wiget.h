@@ -33,8 +33,7 @@ private slots:
 
     void on_pbCola_clicked();
 
-
-    void on_reset_clicked();
+    void on_pbReset_clicked();
 
 private:
     Ui::wiget *ui;
